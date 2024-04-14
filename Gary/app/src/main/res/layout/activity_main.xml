@@ -21,17 +21,32 @@
         tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/text_view_qr_content"
-        android:layout_width="319dp"
-        android:layout_height="304dp"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="188dp"
-        android:layout_marginEnd="54dp"
-        android:layout_marginBottom="33dp"
-        android:text="Scan to get Content"
+        android:id="@+id/text_view_qr_Allergen"
+        android:layout_width="315dp"
+        android:layout_height="137dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="49dp"
+        android:layout_marginBottom="18dp"
+        android:text="Scan to get Allergens"
+        app:layout_constraintBottom_toTopOf="@+id/text_view_qr_Ingredient"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/text_view_qr_Ingredient"
+        android:layout_width="314dp"
+        android:layout_height="220dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="49dp"
+        android:layout_marginBottom="19dp"
+        android:text="Ingredients here"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_qr_Allergen"
         tools:ignore="HardcodedText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

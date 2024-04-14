@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.mlkit.vision.barcode.common.Barcode
+import java.io.IOException
+import org.jsoup.Jsoup
 /*import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,13 +25,11 @@ class MainActivity : ComponentActivity() {
 
     private val cameraPermission = android.Manifest.permission.CAMERA
     private lateinit var binding: ActivityMainBinding
-
+    private var we="https://in.openfoodfacts.org/product/"
 
 
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-        if(isGranted){
-            startScanner()
-        }
+        if(isGranted) this.startScanner()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,14 +57,65 @@ class MainActivity : ComponentActivity() {
             barcodes.forEach{barcode ->
                 when(barcode.format){
                     Barcode.FORMAT_EAN_13 -> {
-                        binding.textViewQrContent.text = barcode.rawValue.toString()
+                        webReader(barcode.rawValue.toString())
+                        //binding.textViewQrContent.text
                     }
                     else ->{
-                        "INVALID".also { binding.textViewQrContent.text = it }
+                        "INVALID".also { binding.textViewQrAllergen.text = it }
                     }
                 }
             }
         }
+    }
+
+    private fun webReader(bsite: String) {
+        val url = buildString {
+            append(we)
+            append(bsite)
+        }
+
+        try {
+            val document = Jsoup.connect(url).get()
+            val content = "$document"
+            val words =content.split(" ")
+            extractor(words)
+        } catch (e: IOException) {
+            println("database found no match")
+            e.printStackTrace()
+        }
+    }
+
+
+    private fun extractor(sentence: List<String>){
+        val Checker2= "Allergens"
+        val Checker="ingredients"
+        val breaker="Food"
+        var foundtarget=false
+        var foundtarget2=false
+        val Allergens=mutableListOf<String>()
+        val Ingredients= mutableListOf<String>()
+        for ( words in sentence) {
+            if(words == breaker)
+                break
+            else if (words == Checker) {
+                foundtarget= true
+            }
+            else if(foundtarget==true){
+                if(words == (Checker2)) {
+                    foundtarget=false
+                    foundtarget2=true
+                }
+                else
+                Ingredients.add(words)
+            }
+            else if(foundtarget2==true){
+                Allergens.add(words)
+
+            }
+        }
+        binding.textViewQrAllergen.text = Allergens.toString()
+        binding.textViewQrIngredient.text = Ingredients.toString()
+
     }
 
     private fun requestCameraPermission() {

@@ -1,0 +1,25 @@
+{
+  "project_info": {
+    "project_number": "791638595943",
+    "project_id": "gary-e0f0c",
+    "storage_bucket": "gary-e0f0c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:791638595943:android:ccd108e62692fbf114f7c2",
+        "android_client_info": {
+          "package_name": "com.rahuleus.gary"
+        }
+      },
+      "oauth_client": [],
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
